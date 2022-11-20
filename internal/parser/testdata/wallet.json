@@ -1,0 +1,16 @@
+{
+    "shuttle": {
+      "errcode": 0,
+      "sum": 123
+    },
+    "meal": {
+      "errcode": 0,
+      "sum": 456.7
+    },
+    "print": {
+      "errcode": 0,
+      "sum": 8.9
+    },
+    "uid": "firstname.lastname",
+    "ou": "student"
+  }
