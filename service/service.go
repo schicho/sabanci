@@ -1,6 +1,7 @@
 package service
 
 import (
+	"log"
 	"time"
 
 	"github.com/schicho/sabanci/data"
@@ -33,7 +34,11 @@ func SaveCookies() error {
 }
 
 func (s *service) SaveCookies() error {
-	return s.suConn.SaveCookies()
+	err := s.suConn.SaveCookies()
+	if err != nil {
+		log.Println("could not save cookies:", err)
+	}
+	return err
 }
 
 // GetCafeteria returns the cafeteria menu for the current day.

@@ -5,6 +5,7 @@ import (
 	"github.com/schicho/sabanci/internal/model/components/dashboard"
 	"github.com/schicho/sabanci/internal/model/components/login"
 	"github.com/schicho/sabanci/internal/model/shutdown"
+	"github.com/schicho/sabanci/service"
 )
 
 // Model is the bubbletea tea.Model for the Elm architecture
@@ -42,7 +43,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.isLoggedIn = true
 
 	case shutdown.Shutdown:
-		// service.SaveCookies()
+		service.SaveCookies()
 		return m, tea.Quit
 	}
 
