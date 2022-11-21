@@ -15,16 +15,16 @@ import (
 // but it is not the same as it does not implement the tea.Model interface.
 // As a component, it returns itself in the Update method.
 type Model struct {
-	help   help.Model
-	wallet wallet.Model
+	help      help.Model
+	wallet    wallet.Model
 	cafeteria cafeteria.Model
 }
 
 func NewModel() Model {
 	return Model{
-		wallet: wallet.NewModel(),
+		wallet:    wallet.NewModel(),
 		cafeteria: cafeteria.NewModel(),
-		help:   help.New(),
+		help:      help.New(),
 	}
 }
 

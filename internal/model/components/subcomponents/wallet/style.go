@@ -17,6 +17,6 @@ var (
 
 	// terminal color 1 (red)
 	errorColor = lipgloss.Color("1")
-	white       = lipgloss.Color("#ffffff")
+	white      = lipgloss.Color("#ffffff")
 	errorStyle = borderStyle.Copy().BorderBackground(errorColor).Background(errorColor).Foreground(white)
 )

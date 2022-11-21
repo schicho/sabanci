@@ -13,7 +13,7 @@ import (
 
 type Model struct {
 	cafeteria *data.Cafeteria
-	err    error
+	err       error
 }
 
 func NewModel() Model {
@@ -52,12 +52,12 @@ func (m Model) View() string {
 		}
 
 		switch {
-			case cal < 200:
-				sb.WriteString(lowCalStyle.Render(name))
-			case cal < 300:
-				sb.WriteString(midCalStyle.Render(name))
-			default:
-				sb.WriteString(highCalStyle.Render(name))
+		case cal < 200:
+			sb.WriteString(lowCalStyle.Render(name))
+		case cal < 300:
+			sb.WriteString(midCalStyle.Render(name))
+		default:
+			sb.WriteString(highCalStyle.Render(name))
 		}
 		if i < len(m.cafeteria.Menu)-1 {
 			sb.WriteRune('\n')
