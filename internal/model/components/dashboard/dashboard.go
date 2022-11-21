@@ -5,6 +5,8 @@ import (
 
 	"github.com/charmbracelet/bubbles/help"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
+	"github.com/schicho/sabanci/internal/model/components/subcomponents/cafeteria"
 	"github.com/schicho/sabanci/internal/model/components/subcomponents/wallet"
 	"github.com/schicho/sabanci/internal/model/shutdown"
 )
@@ -17,11 +19,13 @@ import (
 type Model struct {
 	help   help.Model
 	wallet wallet.Model
+	cafeteria cafeteria.Model
 }
 
 func NewModel() Model {
 	return Model{
 		wallet: wallet.NewModel(),
+		cafeteria: cafeteria.NewModel(),
 		help:   help.New(),
 	}
 }
@@ -36,7 +40,7 @@ func (m Model) Init() tea.Cmd {
 // Thus it does not implement the tea.Model interface.
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	var cmds []tea.Cmd
-	var cmd, walletCmd tea.Cmd
+	var cmd, walletCmd, cafeteriaCmd tea.Cmd
 
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
@@ -54,15 +58,19 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 
 	// run updates of components
 	m.wallet, walletCmd = m.wallet.Update(msg)
+	m.cafeteria, cafeteriaCmd = m.cafeteria.Update(msg)
 
-	cmds = append(cmds, cmd, walletCmd)
+	cmds = append(cmds, cmd, walletCmd, cafeteriaCmd)
 	return m, tea.Batch(cmds...)
 }
 
 func (m Model) View() string {
 	s := m.wallet.View()
+	c := m.cafeteria.View()
 
-	helpView := m.help.View(keys)
+	info := lipgloss.JoinHorizontal(lipgloss.Top, s, c)
 
-	return s + strings.Repeat("\n", 8) + helpView
+	h := m.help.View(keys)
+
+	return info + strings.Repeat("\n", 8) + h
 }
