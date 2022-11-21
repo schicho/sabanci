@@ -2,9 +2,9 @@ package model
 
 import (
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/schicho/sabanci/internal/model/command/shutdown"
 	"github.com/schicho/sabanci/internal/model/components/dashboard"
 	"github.com/schicho/sabanci/internal/model/components/login"
-	"github.com/schicho/sabanci/internal/model/shutdown"
 	"github.com/schicho/sabanci/service"
 )
 

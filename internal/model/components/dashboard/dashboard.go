@@ -4,9 +4,9 @@ import (
 	"github.com/charmbracelet/bubbles/help"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/schicho/sabanci/internal/model/command/shutdown"
 	"github.com/schicho/sabanci/internal/model/components/subcomponents/cafeteria"
 	"github.com/schicho/sabanci/internal/model/components/subcomponents/wallet"
-	"github.com/schicho/sabanci/internal/model/shutdown"
 )
 
 // Model is the model of the dashboard component.
