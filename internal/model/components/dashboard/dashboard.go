@@ -1,6 +1,8 @@
 package dashboard
 
 import (
+	"log"
+
 	"github.com/charmbracelet/bubbles/help"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
@@ -51,7 +53,13 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 		// We can finally add Q to quit the app.
 		case "q":
 			cmd = command.ExecuteShutdown()
+		case "f5":
+			cmd = command.ExecuteRetrieveData()
+			log.Println("refreshing data")
 		}
+
+	case command.LoginSuccess:
+		cmd = command.ExecuteRetrieveData()
 	}
 
 	// run updates of components

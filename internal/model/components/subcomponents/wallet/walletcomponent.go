@@ -25,8 +25,8 @@ func (m Model) Init() tea.Cmd {
 
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	switch msg.(type) {
-	// On login success, retrieve the wallet data.
-	case command.LoginSuccess:
+
+	case command.RetrieveData, command.LoginSuccess:
 		m.wallet, m.err = service.GetWallet()
 	}
 
@@ -36,6 +36,11 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 func (m Model) View() string {
 	if m.err != nil {
 		return errorStyle.Render(fmt.Sprintf("Error: %v", m.err))
+	}
+
+	// wallet might not be initialized, beffore the first call to View()
+	if m.wallet == nil {
+		return ""
 	}
 
 	shuttle := shuttleStyle.Render(fmt.Sprintf("Shuttle: %v", m.wallet.Shuttle))

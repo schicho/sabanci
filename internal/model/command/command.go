@@ -21,3 +21,13 @@ func ExecuteShutdown() tea.Cmd {
 		return Shutdown{}
 	}
 }
+
+type RetrieveData struct{}
+
+// ExecuteRetrieveData defines a custom command for bubbletea,
+// which notifies the components to retrieve their data.
+func ExecuteRetrieveData() tea.Cmd {
+	return func() tea.Msg {
+		return RetrieveData{}
+	}
+}

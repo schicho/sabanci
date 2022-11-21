@@ -26,8 +26,8 @@ func (m Model) Init() tea.Cmd {
 
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	switch msg.(type) {
-	// On login success, retrieve the cafeteria data.
-	case command.LoginSuccess:
+
+	case command.RetrieveData, command.LoginSuccess:
 		m.cafeteria, m.err = service.GetCafeteria()
 	}
 
@@ -37,6 +37,11 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 func (m Model) View() string {
 	if m.err != nil {
 		return errorStyle.Render(fmt.Sprintf("Error: %v", m.err))
+	}
+
+	// cafeteria might not be initialized, beffore the first call to View()
+	if m.cafeteria == nil {
+		return ""
 	}
 
 	sb := strings.Builder{}
