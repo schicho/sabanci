@@ -1,8 +1,6 @@
 package dashboard
 
 import (
-	"strings"
-
 	"github.com/charmbracelet/bubbles/help"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
@@ -69,8 +67,7 @@ func (m Model) View() string {
 	c := m.cafeteria.View()
 
 	info := lipgloss.JoinHorizontal(lipgloss.Top, s, c)
+	dashboard := lipgloss.JoinVertical(lipgloss.Top, info, m.help.View(keys))
 
-	h := m.help.View(keys)
-
-	return info + strings.Repeat("\n", 8) + h
+	return dashboard
 }
