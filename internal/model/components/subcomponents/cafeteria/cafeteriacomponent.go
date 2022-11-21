@@ -41,17 +41,23 @@ func (m Model) View() string {
 
 	sb := strings.Builder{}
 	for i, food := range m.cafeteria.Menu {
-		c, err := strconv.Atoi(food.Calories)
+
+		cal, err := strconv.Atoi(food.Calories)
 		if err != nil {
-			c = 0
+			cal = 0
 		}
+		name := food.Name
+		if len(name) > 30 {
+			name = strings.ToValidUTF8(name[:30], "") + "..."
+		}
+
 		switch {
-			case c < 200:
-				sb.WriteString(lowCalStyle.Render(food.Name))
-			case c < 300:
-				sb.WriteString(midCalStyle.Render(food.Name))
+			case cal < 200:
+				sb.WriteString(lowCalStyle.Render(name))
+			case cal < 300:
+				sb.WriteString(midCalStyle.Render(name))
 			default:
-				sb.WriteString(highCalStyle.Render(food.Name))
+				sb.WriteString(highCalStyle.Render(name))
 		}
 		if i < len(m.cafeteria.Menu)-1 {
 			sb.WriteRune('\n')
