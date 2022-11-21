@@ -4,7 +4,7 @@ import (
 	"github.com/charmbracelet/bubbles/help"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/schicho/sabanci/internal/model/command/shutdown"
+	"github.com/schicho/sabanci/internal/model/command"
 	"github.com/schicho/sabanci/internal/model/components/subcomponents/cafeteria"
 	"github.com/schicho/sabanci/internal/model/components/subcomponents/wallet"
 )
@@ -50,7 +50,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 		switch msg.String() {
 		// We can finally add Q to quit the app.
 		case "q":
-			cmd = shutdown.ExecuteShutdown()
+			cmd = command.ExecuteShutdown()
 		}
 	}
 

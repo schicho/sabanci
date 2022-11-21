@@ -1,6 +1,14 @@
-package shutdown
+package command
 
 import tea "github.com/charmbracelet/bubbletea"
+
+type LoginSuccess struct{}
+
+func ExecuteLoginSuccess() tea.Cmd {
+	return func() tea.Msg {
+		return LoginSuccess{}
+	}
+}
 
 type Shutdown struct{}
 

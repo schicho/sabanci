@@ -7,6 +7,7 @@ import (
 
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/schicho/sabanci/internal/model/command"
 	"github.com/schicho/sabanci/service"
 )
 
@@ -15,8 +16,6 @@ type Model struct {
 	focusIndex int
 	inputs     []textinput.Model
 }
-
-type LoginSuccess struct{}
 
 func NewModel() Model {
 	m := Model{
@@ -52,7 +51,7 @@ func (m Model) Init() tea.Cmd {
 		return textinput.Blink
 	}
 	log.Println("Login Success: Session reestablished")
-	return tea.Batch(m.LoginSuccess(), textinput.Blink)
+	return tea.Batch(command.ExecuteLoginSuccess(), textinput.Blink)
 }
 
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
@@ -74,7 +73,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 				}
 				log.Printf("Login success for user %v", username)
 				m.loginRetry = false
-				return m, m.LoginSuccess()
+				return m, command.ExecuteLoginSuccess()
 			}
 
 			// cycle through the inputs
@@ -147,10 +146,4 @@ func (m Model) View() string {
 	}
 
 	return b.String()
-}
-
-func (m *Model) LoginSuccess() tea.Cmd {
-	return func() tea.Msg {
-		return LoginSuccess{}
-	}
 }

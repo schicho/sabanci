@@ -6,7 +6,7 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/schicho/sabanci/data"
-	"github.com/schicho/sabanci/internal/model/components/login"
+	"github.com/schicho/sabanci/internal/model/command"
 	"github.com/schicho/sabanci/service"
 )
 
@@ -26,7 +26,7 @@ func (m Model) Init() tea.Cmd {
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	switch msg.(type) {
 	// On login success, retrieve the wallet data.
-	case login.LoginSuccess:
+	case command.LoginSuccess:
 		m.wallet, m.err = service.GetWallet()
 	}
 

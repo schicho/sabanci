@@ -2,7 +2,7 @@ package model
 
 import (
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/schicho/sabanci/internal/model/command/shutdown"
+	"github.com/schicho/sabanci/internal/model/command"
 	"github.com/schicho/sabanci/internal/model/components/dashboard"
 	"github.com/schicho/sabanci/internal/model/components/login"
 	"github.com/schicho/sabanci/service"
@@ -36,13 +36,13 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.KeyMsg:
 		switch msg.String() {
 		case "ctrl+c", "esc":
-			cmd = shutdown.ExecuteShutdown()
+			cmd = command.ExecuteShutdown()
 		}
 
-	case login.LoginSuccess:
+	case command.LoginSuccess:
 		m.isLoggedIn = true
 
-	case shutdown.Shutdown:
+	case command.Shutdown:
 		service.SaveCookies()
 		return m, tea.Quit
 	}
