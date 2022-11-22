@@ -28,7 +28,6 @@ Some ideas for contributions:
 - Adding support for the shuttle bus schedule
 - Adding support for the library information
 
-The application is not affiliated with Sabanci University.
 The information is not retrieved via an API. Rather, it is scraped
 from the Sabanci University website, usually by calling the right ajax
 endpoints. You can find examples in the codebase.
@@ -38,3 +37,7 @@ Finally, the service needs to be called by a bubbletea component.
 I am only studying at Sabanci University for one semester as an exchange
 student. If there is interest in this project beyond my stay, I may
 transfer the ownership of the project to someone else.
+
+## Disclaimer
+
+This project and application is not affiliated with Sabanci University.
