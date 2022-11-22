@@ -59,18 +59,30 @@ func (m Model) View() string {
 	}
 
 	var sb strings.Builder
+	var lb strings.Builder
 
-	for _, class := range m.schedule.Classes[m.currentDay] {
-		sb.WriteString(class.ClassCode)
-		sb.WriteRune(' ')
-		sb.WriteString(class.Building)
-		sb.WriteRune(' ')
-		sb.WriteString(class.TimeStart)
-		sb.WriteString(" - ")
-		sb.WriteString(class.TimeEnd)
-		sb.WriteRune('\n')
-		sb.WriteString(class.Name)
-		sb.WriteRune('\n')
+	for i, class := range m.schedule.Classes[m.currentDay] {
+		lb.WriteString(class.TimeStart)
+		lb.WriteString(" - ")
+		lb.WriteString(class.TimeEnd)
+		lb.WriteString(" : ")
+		lb.WriteString(class.ClassCode)
+		lb.WriteRune(' ')
+		lb.WriteString(class.Building)
+		lb.WriteRune('\n')
+		lb.WriteString(class.Name)
+
+		if i < len(m.schedule.Classes[m.currentDay]) - 1 {
+			lb.WriteRune('\n')
+		}
+
+		if i%2 == 0 {
+			sb.WriteString(lineEvenStyle.Render(lb.String()))
+		} else {
+			sb.WriteString(lineOddStyle.Render(lb.String()))
+		}
+
+		lb.Reset()
 	}
 	return blockStyle.Render(sb.String())
 }
