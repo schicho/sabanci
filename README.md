@@ -38,6 +38,16 @@ I am only studying at Sabanci University for one semester as an exchange
 student. If there is interest in this project beyond my stay, I may
 transfer the ownership of the project to someone else.
 
+## Installation
+
+You can download the latest release from the releases page.
+
+If you have Go installed, you can also install the application with:
+
+```go
+go install github.com/schicho/sabanci/cmd/sabanci@latest
+```
+
 ## Disclaimer
 
 This project and application is not affiliated with Sabanci University.
