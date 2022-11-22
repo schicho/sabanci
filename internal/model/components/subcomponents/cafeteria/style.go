@@ -2,9 +2,16 @@ package cafeteria
 
 import "github.com/charmbracelet/lipgloss"
 
+
+const (
+	blockWidth = 32
+	textWidth  = blockWidth - 2
+	blockMaxHeight = 23
+)
+
 var (
 	white       = lipgloss.Color("#ffffff")
-	borderStyle = lipgloss.NewStyle().BorderStyle(lipgloss.NormalBorder()).BorderForeground(white)
+	borderStyle = lipgloss.NewStyle().BorderStyle(lipgloss.NormalBorder()).BorderForeground(white).Width(blockWidth).MaxHeight(blockMaxHeight)
 
 	lowCal  = lipgloss.Color("2") // terminal color 2 (green)
 	midCal  = lipgloss.Color("3") // terminal color 3 (yellow)

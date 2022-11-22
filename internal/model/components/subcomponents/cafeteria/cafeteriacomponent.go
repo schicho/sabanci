@@ -52,8 +52,8 @@ func (m Model) View() string {
 			cal = 0
 		}
 		name := food.Name
-		if len(name) > 30 {
-			name = strings.ToValidUTF8(name[:30], "") + "..."
+		if len(name) > textWidth {
+			name = strings.ToValidUTF8(name[:textWidth - 2], "") + "..."
 		}
 
 		switch {
