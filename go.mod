@@ -6,7 +6,7 @@ require (
 	github.com/charmbracelet/bubbles v0.14.0
 	github.com/charmbracelet/bubbletea v0.23.1
 	github.com/charmbracelet/lipgloss v0.6.0
-	github.com/schicho/persistent-cookiejar v0.0.0-20221114083619-f19c1c40806a
+	github.com/orirawlings/persistent-cookiejar v0.3.2
 	golang.org/x/net v0.2.0
 )
 
@@ -14,6 +14,9 @@ require (
 	github.com/atotto/clipboard v0.1.4 // indirect
 	github.com/aymanbagabas/go-osc52 v1.0.3 // indirect
 	github.com/containerd/console v1.0.3 // indirect
+	github.com/frankban/quicktest v1.14.3 // indirect
+	github.com/google/go-cmp v0.5.9 // indirect
+	github.com/kr/pretty v0.3.1 // indirect
 	github.com/lucasb-eyer/go-colorful v1.2.0 // indirect
 	github.com/mattn/go-isatty v0.0.16 // indirect
 	github.com/mattn/go-localereader v0.0.1 // indirect

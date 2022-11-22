@@ -7,7 +7,7 @@ import (
 	"os"
 	"path"
 
-	pcj "github.com/schicho/persistent-cookiejar"
+	pcj "github.com/orirawlings/persistent-cookiejar"
 )
 
 type client struct {
