@@ -8,6 +8,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	"github.com/schicho/sabanci/internal/model/command"
 	"github.com/schicho/sabanci/internal/model/components/subcomponents/cafeteria"
+	"github.com/schicho/sabanci/internal/model/components/subcomponents/schedule"
 	"github.com/schicho/sabanci/internal/model/components/subcomponents/wallet"
 )
 
@@ -19,6 +20,7 @@ import (
 type Model struct {
 	help      help.Model
 	wallet    wallet.Model
+	schedule schedule.Model
 	cafeteria cafeteria.Model
 }
 
@@ -26,6 +28,7 @@ func NewModel() Model {
 	return Model{
 		wallet:    wallet.NewModel(),
 		cafeteria: cafeteria.NewModel(),
+		schedule:  schedule.NewModel(),
 		help:      help.New(),
 	}
 }
@@ -40,7 +43,7 @@ func (m Model) Init() tea.Cmd {
 // Thus it does not implement the tea.Model interface.
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	var cmds []tea.Cmd
-	var cmd, walletCmd, cafeteriaCmd tea.Cmd
+	var cmd, walletCmd, cafeteriaCmd, scheduleCmd tea.Cmd
 
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
@@ -65,17 +68,23 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	// run updates of components
 	m.wallet, walletCmd = m.wallet.Update(msg)
 	m.cafeteria, cafeteriaCmd = m.cafeteria.Update(msg)
+	m.schedule, scheduleCmd = m.schedule.Update(msg)
 
-	cmds = append(cmds, cmd, walletCmd, cafeteriaCmd)
+	cmds = append(cmds, cmd, walletCmd, cafeteriaCmd, scheduleCmd)
 	return m, tea.Batch(cmds...)
 }
 
 func (m Model) View() string {
-	s := m.wallet.View()
+	w := m.wallet.View()
 	c := m.cafeteria.View()
+	s := m.schedule.View()
+	h := m.help.View(keys)
 
-	info := lipgloss.JoinHorizontal(lipgloss.Top, s, c)
-	dashboard := lipgloss.JoinVertical(lipgloss.Top, info, m.help.View(keys))
+	// join the views of the components
+	ws := lipgloss.JoinVertical(lipgloss.Top, w, s)
+	wsc := lipgloss.JoinHorizontal(lipgloss.Top, ws, c)
+
+	dashboard := lipgloss.JoinVertical(lipgloss.Top, wsc, h)
 
 	return dashboard
 }
