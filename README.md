@@ -8,9 +8,12 @@ Currently, it supports the following features:
 - Viewing your wallet balance of your student card
 - Viewing the cafeteria meal plan
 
+![samplescreenshot](https://user-images.githubusercontent.com/64368773/203302141-cce53bd5-c47c-495b-a943-d20bf163128c.png)
+
+
 You can login with your Sabanci University credentials. The application
 will not store your credentials. It is only used for logging in to the
-CAS server.
+CAS (Central Authentication Service) and getting the session cookie.
 The application will store your session cookies so the next time you
 run the application, you will not need to login manually again.
 
