@@ -12,9 +12,9 @@ import (
 )
 
 type Model struct {
-	schedule *data.Schedule
-	currentDay	  int
-	err    error
+	schedule   *data.Schedule
+	currentDay int
+	err        error
 }
 
 func getDaySchedule() int {
@@ -72,7 +72,7 @@ func (m Model) View() string {
 		lb.WriteRune('\n')
 		lb.WriteString(class.Name)
 
-		if i < len(m.schedule.Classes[m.currentDay]) - 1 {
+		if i < len(m.schedule.Classes[m.currentDay])-1 {
 			lb.WriteRune('\n')
 		}
 

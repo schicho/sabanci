@@ -20,7 +20,7 @@ import (
 type Model struct {
 	help      help.Model
 	wallet    wallet.Model
-	schedule schedule.Model
+	schedule  schedule.Model
 	cafeteria cafeteria.Model
 }
 

@@ -3,14 +3,14 @@ package schedule
 import "github.com/charmbracelet/lipgloss"
 
 const (
-	blockWidth = 44
-	textWidth  = blockWidth - 2
+	blockWidth     = 44
+	textWidth      = blockWidth - 2
 	blockMaxHeight = 23
 )
 
 var (
 	white       = lipgloss.Color("#ffffff")
-	gray 	  = lipgloss.Color("#a9a9a9")
+	gray        = lipgloss.Color("#a9a9a9")
 	borderStyle = lipgloss.NewStyle().BorderStyle(lipgloss.NormalBorder()).BorderForeground(white)
 
 	blockStyle = borderStyle.Copy().Width(blockWidth).MaxHeight(blockMaxHeight)

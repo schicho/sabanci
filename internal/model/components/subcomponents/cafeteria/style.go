@@ -2,10 +2,9 @@ package cafeteria
 
 import "github.com/charmbracelet/lipgloss"
 
-
 const (
-	blockWidth = 32
-	textWidth  = blockWidth - 2
+	blockWidth     = 32
+	textWidth      = blockWidth - 2
 	blockMaxHeight = 23
 )
 

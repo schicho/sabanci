@@ -16,7 +16,8 @@ func TestService(t *testing.T) {
 	password := os.Getenv("TEST_PASSWORD")
 
 	if username == "" || password == "" {
-		t.Fatal("TEST_USERNAME and TEST_PASSWORD must be set")
+		t.Error("TEST_USERNAME and TEST_PASSWORD must be set")
+		t.SkipNow()
 	}
 
 	err := s.Login(username, password)
