@@ -15,8 +15,8 @@ var (
 
 	blockStyle = borderStyle.Copy().Width(blockWidth).MaxHeight(blockMaxHeight)
 
-	lineEvenStyle = lipgloss.NewStyle().Foreground(white)
-	lineOddStyle  = lipgloss.NewStyle().Foreground(gray)
+	lineEvenStyle = lipgloss.NewStyle().Foreground(white).Width(textWidth)
+	lineOddStyle  = lipgloss.NewStyle().Foreground(gray).Width(textWidth)
 
 	errorColor = lipgloss.Color("1") // terminal color 1 (red)
 	errorStyle = borderStyle.Copy().BorderBackground(errorColor).Background(errorColor).Foreground(white)
