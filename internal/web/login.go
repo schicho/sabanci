@@ -86,6 +86,7 @@ func (c *client) postLogin(username, password, executionRandom string) (*http.Re
 	return c.PostForm(loginPageURL, url.Values{
 		"username":    {username},
 		"password":    {password},
+		"rememberMe":  {"true"},
 		"execution":   {executionRandom},
 		"_eventId":    {"submit"},
 		"geolocation": {""},
