@@ -54,5 +54,9 @@ func (c *client) SaveCookies() error {
 	if !ok {
 		return nil
 	}
-	return pJar.Save()
+	err := pJar.Save()
+	if err != nil {
+		log.Println("could not save cookies:", err)
+	}
+	return err
 }
