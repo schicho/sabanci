@@ -3,6 +3,7 @@ package web
 import (
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
 	"net/url"
 
@@ -14,8 +15,9 @@ const (
 )
 
 var (
-	ErrLoginFailed   = errors.New("login failed")
-	ErrNoCredentials = errors.New("no credentials provided")
+	ErrLoginFailed          = errors.New("login failed")            // ErrLoginFailed is returned when the login fails due to user error.
+	ErrNetworkRequestFailed = errors.New("network request failed")  // ErrRequestFailed is returned when the login fails due to a network or server error.
+	ErrNoCredentials        = errors.New("no credentials provided") // ErrNoCredentials is returned when the login fails due to no credentials being provided.
 )
 
 // Login logs in to mysu.sabanciuniv.edu using the given username and
@@ -23,13 +25,16 @@ var (
 func (c *client) Login(username, password string) error {
 	resp, err := c.loadLoginPage()
 	if err != nil {
-		return fmt.Errorf("%w: %v", ErrLoginFailed, err)
+		log.Println(fmt.Errorf("%w: %v", ErrNetworkRequestFailed, err))
+		return ErrNetworkRequestFailed
 	}
 	defer resp.Body.Close()
 
 	root, err := html.Parse(resp.Body)
 	if err != nil {
-		return fmt.Errorf("%w: %v", ErrLoginFailed, err)
+		// Less of a network error, more of a parsing error, but it's not the user's fault.
+		log.Println(fmt.Errorf("%w: %v", ErrNetworkRequestFailed, err))
+		return ErrNetworkRequestFailed
 	}
 
 	// we can short-circuit the login process if the session can be restored
@@ -41,6 +46,7 @@ func (c *client) Login(username, password string) error {
 	// We only check for the credentials here, because we want to be able to
 	// restore the session from the cookies if possible.
 	if username == "" || password == "" {
+		log.Println(ErrNoCredentials)
 		return ErrNoCredentials
 	}
 
@@ -50,12 +56,15 @@ func (c *client) Login(username, password string) error {
 	// login form.
 	executionRandom, err := findExecutionRandom(root)
 	if err != nil {
-		return fmt.Errorf("%w: %v", ErrLoginFailed, err)
+		// Again, we can't really blame the user for this, the server did not respond with the CAS login page.
+		log.Println(fmt.Errorf("%w: %v", ErrNetworkRequestFailed, err))
+		return ErrNetworkRequestFailed
 	}
 
 	respLogin, err := c.postLogin(username, password, executionRandom)
 	if err != nil {
-		return fmt.Errorf("%w: %v", ErrLoginFailed, err)
+		log.Println(fmt.Errorf("%w: %v", ErrNetworkRequestFailed, err))
+		return ErrLoginFailed
 	}
 	defer respLogin.Body.Close()
 
@@ -63,16 +72,22 @@ func (c *client) Login(username, password string) error {
 	// dashboard page. If the login is unsuccessful, the server
 	// redirects us to the login page again.
 	if respLogin.StatusCode == http.StatusUnauthorized {
-		return fmt.Errorf("%w: %v", ErrLoginFailed, "unauthorized")
+		err = fmt.Errorf("%w: %v", ErrLoginFailed, "unauthorized")
+		log.Println(err)
+		return err
 	}
 
 	root, err = html.Parse(respLogin.Body)
 	if err != nil {
-		return fmt.Errorf("%w: %v", ErrLoginFailed, err)
+		// Parse error, which is not the user's fault. Can reported as a network error.
+		log.Println(fmt.Errorf("%w: %v", ErrNetworkRequestFailed, err))
+		return ErrNetworkRequestFailed
 	}
 
 	if !sessionRestored(root) {
-		return fmt.Errorf("%w: %v", ErrLoginFailed, "session could not be established")
+		err = fmt.Errorf("%w: %v", ErrLoginFailed, "session was not established")
+		log.Println(err)
+		return err
 	}
 
 	return nil
