@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 
 	"github.com/schicho/sabanci/data"
 )
@@ -36,7 +37,9 @@ type walletResponse struct {
 func ParseWallet(r io.Reader) (*data.Wallet, error) {
 	walletResponse, err := parseWalletResponse(r)
 	if err != nil {
-		return nil, err
+		log.Println(err)
+		// remove context for the frontend
+		return nil, ErrParseSchedule
 	}
 
 	wallet := &data.Wallet{

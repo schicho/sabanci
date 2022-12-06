@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 
 	"github.com/schicho/sabanci/data"
 )
@@ -26,7 +27,9 @@ type cafeteriaResponse struct {
 func ParseCafeteria(r io.Reader) (*data.Cafeteria, error) {
 	food, err := parseCafeteriaResponse(r)
 	if err != nil {
-		return nil, err
+		log.Println(err)
+		// remove context for the frontend
+		return nil, ErrParseCafeteria
 	}
 
 	var menu []data.Food

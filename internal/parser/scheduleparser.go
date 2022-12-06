@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 
 	"github.com/schicho/sabanci/data"
 )
@@ -50,7 +51,9 @@ type scheduleResponse struct {
 func ParseSchedule(r io.Reader) (*data.Schedule, error) {
 	scheduleResponse, err := parseScheduleResponse(r)
 	if err != nil {
-		return nil, err
+		log.Println(err)
+		// remove context for the frontend
+		return nil, ErrParseSchedule
 	}
 
 	var schedule data.Schedule
@@ -62,11 +65,13 @@ func ParseSchedule(r io.Reader) (*data.Schedule, error) {
 	// The second row contains the end time and building of the class.
 	weekdays := scheduleResponse.TableBody.Rows[0].Cells[0].DivSchedule.DivsDays
 	if len(weekdays) != 7 {
-		return nil, fmt.Errorf("%w: expected 7 days, got %d", ErrParseSchedule, len(weekdays))
+		log.Println(fmt.Errorf("%w: expected 7 days, got %d", ErrParseSchedule, len(weekdays)))
+		return nil, ErrParseSchedule
 	}
 	for i, day := range weekdays {
 		if len(day.Table.Rows)%2 != 0 {
-			return nil, fmt.Errorf("%w: expected even number of rows, got %d", ErrParseSchedule, len(day.Table.Rows))
+			log.Println(fmt.Errorf("%w: expected even number of rows, got %d", ErrParseSchedule, len(day.Table.Rows)))
+			return nil, ErrParseSchedule
 		}
 		for j, row := range day.Table.Rows {
 			if j%2 == 0 {
