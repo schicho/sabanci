@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"io"
 	"log"
 	"os"
@@ -17,8 +16,7 @@ func main() {
 	if len(os.Getenv("DEBUG")) > 0 {
 		f, err := tea.LogToFile("debug.log", "debug")
 		if err != nil {
-			fmt.Println("fatal:", err)
-			os.Exit(1)
+			log.Fatalln(err)
 		}
 		defer f.Close()
 	} else {
@@ -27,7 +25,6 @@ func main() {
 
 	p := tea.NewProgram(model.NewModel(), tea.WithAltScreen())
 	if _, err := p.Run(); err != nil {
-		fmt.Printf("Error: %v", err)
-		os.Exit(1)
+		log.Fatalln(err)
 	}
 }
