@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -21,21 +22,24 @@ const (
 	scheduleURL = `https://mysu.sabanciuniv.edu/en/ajax/getCourseSchedule`
 )
 
-var ErrRequestData = errors.New("could not get request data")
+var ErrRequestData = errors.New("could not download data")
 
 func (c *client) getRequestBodyReader(URL string) (io.ReadCloser, error) {
 	// can use c.Get() here later if I am done debugging.
 	req, err := http.NewRequest("GET", URL, nil)
 	if err != nil {
-		return nil, err
+		log.Println(fmt.Errorf("%w: %v", ErrRequestData, err))
+		return nil, ErrRequestData
 	}
 
 	resp, err := c.Do(req)
 	if err != nil {
-		return nil, fmt.Errorf("%w: %v", ErrRequestData, err)
+		log.Println(fmt.Errorf("%w: %v", ErrRequestData, err))
+		return nil, ErrRequestData
 	}
 	if resp.StatusCode != 200 {
-		return nil, fmt.Errorf("%w: got status code %v", ErrRequestData, resp.Status)
+		log.Println(fmt.Errorf("%w: got status code %v", ErrRequestData, resp.Status))
+		return nil, ErrRequestData
 	}
 
 	return resp.Body, nil
